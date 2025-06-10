@@ -1,17 +1,28 @@
 package com.anderson.webserviclientece;
 
+import org.anderson.servicioweb.services.Curso;
+import org.anderson.servicioweb.services.ServicioWs;
+import org.anderson.servicioweb.services.ServicioWsImplementService;
+
+import java.util.List;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        //creamos el objeto Servicio Web
+        ServicioWs service = new ServicioWsImplementService(). getServicioWsImplementPort();
+        //Imprimimos en consola el saludo
+        System.out.println("saludo: "+ service.saludar("Anderson Soto"));
+        //Inicializamos el objeto curso
+        Curso curso = new Curso();
+        //Aniadimos
+        curso.setNombre("JavaScript");
+        Curso respuesta = service.crear(curso);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        //Imprimimos el nuevo curso aniadindo
+        System.out.println("Nuevo Curso: "+ curso.getNombre());
+        //Listamos los cursos
+        service.listar().forEach (c -> System.out.println(c.getNombre()));
     }
 }
